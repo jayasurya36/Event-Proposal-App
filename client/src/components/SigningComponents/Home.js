@@ -17,10 +17,11 @@ function Home() {
         </p>
       </section>
       <section className='rightSection'>
-          {
-
-          }
+         {
+          isLog ? <Login/> : <Register/>
+         }
       </section>
+      <button onClick={() =>setLog(isLog => !isLog)}>create account</button>
     </div>
   </div>
 }
