@@ -2,14 +2,12 @@ require('dotenv').config()
 const User = require('../models/user.model');
 const Vendor = require('../models/vendor.model');
 const bcrypt = require('bcrypt');
-const signingRoutes = {};
 
-signingRoutes.userRegister = async (req, res) => {
-
+const userRegister = async (req, res) => {
+    console.log(req.body)
     try {
-        console.log(req.body);
         let user = await User.findOne({ email: req.body.email });
-        if (!user) {
+        if (user) {
             return res.status(403).json({
                 status: 'Failed',
                 message: "Email Id already exists"
@@ -22,7 +20,7 @@ signingRoutes.userRegister = async (req, res) => {
                 resetAnswer: hashedAnswer,
                 password: hashedPassword
             });
-            await newUser.save();
+            newUser = await newUser.save();
             res.status(200).json({
                 status: 'Sucess',
                 user: newUser
@@ -36,10 +34,11 @@ signingRoutes.userRegister = async (req, res) => {
     }
 }
 
-signingRoutes.vendorRegister = async (req, res) => {
+const vendorRegister = async (req, res) => {
     try {
+        console.log(req.body)
         let vendor = await Vendor.findOne({ email: req.body.email });
-        if (!vendor) {
+        if (vendor) {
             return res.status(403).json({
                 status: 'Failed',
                 message: "Email Id already exists"
@@ -52,7 +51,7 @@ signingRoutes.vendorRegister = async (req, res) => {
                 resetAnswer: hashedAnswer,
                 password: hashedPassword
             });
-            await newVendor.save();
+            newVendor = await newVendor.save();
             res.status(200).json({
                 status: 'Sucess',
                 user: newVendor
@@ -71,4 +70,4 @@ signingRoutes.vendorRegister = async (req, res) => {
 
 
 
-module.exports = signingRoutes
+module.exports = {userRegister , vendorRegister}
