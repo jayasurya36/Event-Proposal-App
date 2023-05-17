@@ -137,7 +137,6 @@ const vendorlogin = async (req, res) => {
 //USER PASSWORD RESET 
 const resetPasswordUser = async(req , res) =>{
     try{
-        console.log(req.body)
         let user = await User.findOne({ email: req.body.email });
         if(user){
             if(await bcrypt.compare(req.body.resetAnswer , user.resetAnswer)){
