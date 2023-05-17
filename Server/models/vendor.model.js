@@ -28,6 +28,10 @@ const vendorModel = mongoose.Schema({
         required : true,
         default : true
     },
+    proposals :{
+        type : [String],
+        default : []
+    },
     profile_pic : {
         type : String,
         default : null
