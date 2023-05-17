@@ -2,9 +2,11 @@ require('dotenv').config()
 const User = require('../models/user.model');
 const Vendor = require('../models/vendor.model');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
+
+//USER REGISTER
 const userRegister = async (req, res) => {
-    console.log(req.body)
     try {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
@@ -34,9 +36,9 @@ const userRegister = async (req, res) => {
     }
 }
 
+//VENDOR REGISTER
 const vendorRegister = async (req, res) => {
     try {
-        console.log(req.body)
         let vendor = await Vendor.findOne({ email: req.body.email });
         if (vendor) {
             return res.status(403).json({
@@ -66,8 +68,132 @@ const vendorRegister = async (req, res) => {
 }
 
 
+//USER LOGIN
+const Userlogin = async (req, res) => {
+    try {
+        let user = await User.findOne({ email: req.body.email });
+        if (user) {
+            const {name , email , password , contact , resetAnswer,isUser,proposals} = user
+            if (await bcrypt.compare(req.body.password, user.password)) {
+                let token = await jwt.sign({name , email , password , contact , resetAnswer,isUser,proposals}, process.env.secret);
+                res.status(400).json({
+                    status: "Success",
+                    token: token,
+                    user: user
+                })
+            } else {
+                res.status(401).json({
+                    status: "Failed",
+                    message: "Wrong Password"
+                })
+            }
+        } else {
+            res.status(400).json({
+                status: "Failed",
+                message: "User Not found"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            status: "Failed",
+            message: err.message
+        })
+    }
+}
 
+//VENDOR LOGIN
+const vendorlogin = async (req, res) => {
+    try {
+        let vendor = await Vendor.findOne({ email: req.body.email });
+        if (vendor) {
+            const {name , email , password , contact , resetAnswer,isVendor,proposals} = vendor
+            if (await bcrypt.compare(req.body.password, password)) {
+                let token = await jwt.sign({name , email , password , contact , resetAnswer,isVendor,proposals}, process.env.secret);
+                res.status(400).json({
+                    status: "Success",
+                    token: token,
+                    user: vendor
+                })
+            } else {
+                res.status(401).json({
+                    status: "Failed",
+                    message: "Wrong Password"
+                })
+            }
+        } else {
+            res.status(400).json({
+                status: "Failed",
+                message: "vendor Not found"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            status: "Failed",
+            message: err.message
+        })
+    } 
+}
 
+//USER PASSWORD RESET 
+const resetPasswordUser = async(req , res) =>{
+    try{
+        console.log(req.body)
+        let user = await User.findOne({ email: req.body.email });
+        if(user){
+            if(await bcrypt.compare(req.body.resetAnswer , user.resetAnswer)){
+                if(await User.findOneAndUpdate({email : req.body.email} , {password : req.body.password})){
+                    res.status(200).json({
+                        status : "Success"
+                    })
+                }else{
+                    res.status(400).json({
+                        status : "Failed",
+                        message : "Answer is wrong"
+                    })
+                }
+            }else{
+                res.status(400).json({
+                    status : "Failed",
+                    message : "User Not found"
+                })
+            }
+        }
+    }catch(err){
+        res.status(500).json({
+            status : "Failed",
+            message : err.message
+        })
+    }
+}
 
-
-module.exports = {userRegister , vendorRegister}
+//VENDOR PASSWORD RESET
+const resetPasswordVendor = async(req , res) =>{
+    try{
+        let vendor = await Vendor.findOne({ email: req.body.email });
+        if(vendor){
+            if(await bcrypt.compare(req.body.resetAnswer , vendor.resetAnswer)){
+                if(await Vendor.findOneAndUpdate({email : req.body.email} , {password : req.body.password})){
+                    res.status(200).json({
+                        status : "Success"
+                    })
+                }else{
+                    res.status(400).json({
+                        status : "Failed",
+                        message : "Answer is wrong"
+                    })
+                }
+            }else{
+                res.status(400).json({
+                    status : "Failed",
+                    message : "User Not found"
+                })
+            }
+        }
+    }catch(err){
+        res.status(500).json({
+            status : "Failed",
+            message : err.message
+        })
+    }
+}
+module.exports = { userRegister, vendorRegister, vendorlogin, Userlogin  ,resetPasswordUser , resetPasswordVendor }
