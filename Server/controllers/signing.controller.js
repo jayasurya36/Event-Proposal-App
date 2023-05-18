@@ -90,7 +90,7 @@ const Userlogin = async (req, res) => {
         } else {
             res.status(400).json({
                 status: "Failed",
-                message: "User Not found"
+                message: "User Not Found"
             })
         }
     } catch (err) {
@@ -123,7 +123,7 @@ const vendorlogin = async (req, res) => {
         } else {
             res.status(400).json({
                 status: "Failed",
-                message: "vendor Not found"
+                message: "vendor Not Found"
             })
         }
     } catch (err) {
@@ -184,7 +184,7 @@ const resetPasswordVendor = async(req , res) =>{
             }else{
                 res.status(400).json({
                     status : "Failed",
-                    message : "User Not found"
+                    message : "User Not Found"
                 })
             }
         }

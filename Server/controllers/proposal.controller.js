@@ -120,6 +120,7 @@ const vendorProposals = async(req , res) =>{
     }
 }
 
+//GET SINGLE PROPOSALS BY ID
 const getSingleProposal = async(req , res) =>{
     try{
         let id = req.params.id;
