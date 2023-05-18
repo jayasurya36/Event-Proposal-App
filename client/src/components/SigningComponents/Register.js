@@ -36,43 +36,38 @@ function Register() {
     <div>
       <div>Register Account</div>
       <form onSubmit={handleSubmit} className='content'>
-        <label>
-          Name:
-          <input type="text" value={name} onChange={handleNameChange} />
-        </label>
-        <br />
-        <label>
-          Email Address:
-          <input type="email" value={email} onChange={handleEmailChange} />
-        </label>
-        <br />
-        <label>
-          Contact Number:
+        
+         
+          <input type="text" value={name} onChange={handleNameChange} placeholder='Name'/>
+        
+        
+          <input type="email" value={email} onChange={handleEmailChange} placeholder='Email'/>
+        
+        
           <input
             type="text"
             value={contactNumber}
             onChange={handleContactNumberChange}
+            placeholder='Contact Number'
           />
-        </label>
-        <br />
-        <label>
-          Password:
+        
+       
+        
           <input
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            placeholder='Password'
           />
-        </label>
-        <br />
-        <label>
-          Confirm Password:
+        
+        
           <input
             type="password"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
+            placeholder='Confirm Password'
           />
-        </label>
-        <br />
+        
         <button type="submit">Register</button>
       </form>
       </div>
