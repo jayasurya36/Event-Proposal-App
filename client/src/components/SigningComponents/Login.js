@@ -11,10 +11,49 @@ function Login({ setLog }) {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., make an API call to create a new user
+  
+    // Validate form inputs, perform any necessary checks
+  
+    // Create a user object with the form data
+    const user = {
+      email,
+      password,
+    };
+  
+    try {
+      // Make an API call to authenticate the user based on the selected user type
+      const userType = userType === 'User' ? 'user' : 'vendor';
+      const response = await fetch(`http://localhost:5000/${userType}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+  
+      const data = await response.json();
+  
+      // Handle the response data
+      if (response.ok) {
+        // User authentication successful
+        console.log('User authenticated:', data);
+        
+      } else {
+        // User authentication failed
+        console.log('User authentication failed:', data.error);
+       
+      }
+  
+  
+    } catch (error) {
+      // Handle any errors during the API call
+      console.error('Error during authentication:', error);
+      
+    }
   };
+  
   const { userType, changeUserType } = useAppContext()
 
   return (
