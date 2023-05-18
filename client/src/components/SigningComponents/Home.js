@@ -9,7 +9,9 @@ function Home() {
   const[isLog , setLog] = useState(true);
  
   return <div className='homeContainer'>
-    <h1>LOGO</h1>
+   <div className='logoContainer'>
+   <h1>LOGO</h1>
+   </div>
     <div className='sectionContainer'>
       <section className='leftSection'>
         <p>
@@ -18,10 +20,9 @@ function Home() {
       </section>
       <section className='rightSection'>
          {
-          isLog ? <Login/> : <Register/>
+          isLog ? <Login setLog = {setLog}/> : <Register setLog = {setLog}/>
          }
       </section>
-      <button onClick={() =>setLog(isLog => !isLog)}>create account</button>
     </div>
   </div>
 }
