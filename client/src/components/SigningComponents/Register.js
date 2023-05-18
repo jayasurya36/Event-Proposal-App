@@ -34,10 +34,59 @@ function Register({setLog}) {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., make an API call to create a new user
+  
+    // Validate form inputs, perform any necessary checks
+     // Validate form inputs
+  if (password !== confirmPassword) {
+    // Display an error message or handle password mismatch
+    console.log("password mismatch")
+    return;
+  }
+  
+    // Create a user object with the form data
+    const newUser = {
+      name,
+      email,
+      contact,
+      password,
+      resetAnswer
+      
+    };
+  
+    try {
+      // Make an API call to register the user based on the selected user type
+      const userType = userType === 'User' ? 'user' : 'vendor';
+      const response = await fetch(`http://localhost:5000/${userType}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+  
+      const data = await response.json();
+  
+      // Handle the response data
+      // if (response.ok) {
+      //   // User registration successful
+      //   console.log('User registered successfully:', data);
+        
+      // } else {
+      //   // User registration failed
+      //   console.log('User registration failed:', data.error);
+        
+      // }
+  console.log(data)
+
+    } catch (error) {
+      // Handle any errors during the API call
+      console.error('Error during registration:', error);
+      
+    }
   };
+  
 
   const {userType , changeUserType} = useAppContext()
 
