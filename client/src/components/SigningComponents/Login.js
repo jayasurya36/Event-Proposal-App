@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../contexts/ContextProvider';
+import { login } from '../../utils/utils.api';
 
 
 function Login({ setLog }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { userType, changeUserType } = useAppContext()
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -13,48 +15,17 @@ function Login({ setLog }) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validate form inputs, perform any necessary checks
-  
-    // Create a user object with the form data
-    const user = {
+    const newUser = {
       email,
-      password,
-    };
-  
-    try {
-      // Make an API call to authenticate the user based on the selected user type
-      const userType = userType === 'User' ? 'user' : 'vendor';
-      const response = await fetch(`http://localhost:5000/${userType}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
-  
-      const data = await response.json();
-  
-      // Handle the response data
-      if (response.ok) {
-        // User authentication successful
-        console.log('User authenticated:', data);
-        
-      } else {
-        // User authentication failed
-        console.log('User authentication failed:', data.error);
-       
-      }
-  
-  
-    } catch (error) {
-      // Handle any errors during the API call
-      console.error('Error during authentication:', error);
-      
+      password
     }
+    console.log(newUser);
+    login(newUser , userType === "Vendor" ? "vendor" : "user" ).then((res) =>{
+      console.log(res);
+    })
   };
   
-  const { userType, changeUserType } = useAppContext()
+  
 
   return (
     <div className='formHolder'>
@@ -67,7 +38,7 @@ function Login({ setLog }) {
         >User</button>
       </div>
       <div className='topicHolder'>Sign In to your account</div>
-      <form onSubmit={handleSubmit} className='content'>
+      <form onSubmit={handleSubmit} method='post' action='#' className='content'>
         <input type="email" value={email} onChange={handleEmailChange}
           placeholder='Email'
         />
