@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { parse } = require('dotenv');
 const User = require('../models/user.model');
 const Vendor = require('../models/vendor.model');
 const bcrypt = require('bcrypt');
@@ -109,7 +110,7 @@ const vendorlogin = async (req, res) => {
             const {name , email , password , contact , resetAnswer,isVendor,proposals} = vendor
             if (await bcrypt.compare(req.body.password, password)) {
                 let token = await jwt.sign({name , email , password , contact , resetAnswer,isVendor,proposals}, process.env.secret);
-                res.status(400).json({
+                res.status(200).json({
                     status: "Success",
                     token: token,
                     user: vendor
