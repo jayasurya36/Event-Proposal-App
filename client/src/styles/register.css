@@ -17,7 +17,6 @@
     border-radius: 5px;
     border: 1px solid  #D1D1D1;
     margin: 20px auto;
-    color: #D1D1D1;
 }
 .formHolder input :focus{
     border-color: #4E94F4;
@@ -68,4 +67,19 @@
     margin: 5px 30px;
     padding-bottom: 10px;
     text-decoration: none;
+}
+
+.loader{
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    border: 1px solid gray;
+    border-top: 1px solid white;
+    border-radius: 50%;
+    animation: authLoader 2s infinite linear;
+}
+.error{
+    color: red;
+    font-size: 10px;
+    text-align: center;
 }

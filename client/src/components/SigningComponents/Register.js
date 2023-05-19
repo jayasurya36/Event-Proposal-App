@@ -11,6 +11,8 @@ function Register({ setLog }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [resetAnswer, setresetAnswer] = useState('');
   const { userType, changeUserType } = useAppContext()
+  const [load , setload] = useState(true);
+  const [passwordCheck , setPasswordCheck] =useState(true)
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -29,6 +31,12 @@ function Register({ setLog }) {
 
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
+    if(password !== e.target.value){
+      setPasswordCheck(() => false);
+    }
+    else{
+      setPasswordCheck(() => true)
+    }
   };
 
   const handleresetAnswer = (e) => {
@@ -37,6 +45,7 @@ function Register({ setLog }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setload(false)
     const newUser = {
       name,
       email,
@@ -67,35 +76,44 @@ function Register({ setLog }) {
       </div>
       <div className='topicHolder'>Register in your Account</div>
       <form onSubmit={handleSubmit} method='post' action='#' className='content'>
-        <input type="text" value={name} onChange={handleNameChange} placeholder='Name' />
-        <input type="email" value={email} onChange={handleEmailChange} placeholder='Email' />
+        <input type="text" value={name} onChange={handleNameChange} placeholder='Name' required/>
+        <input type="email" value={email} onChange={handleEmailChange} placeholder='Email' required/>
         <input
           type="text"
           value={contact}
           onChange={handleContactNumberChange}
           placeholder='Contact Number'
+          required
+          max="10"
+          min="10"
         />
         <input
           type="password"
           value={password}
           onChange={handlePasswordChange}
           placeholder='Password'
+          required
+          min="8"
         />
+        {passwordCheck ? "" : <span className='error'>Password Miss Match</span>}
         <input
           type="password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           placeholder='Confirm Password'
+          required
+          min="8"
         />
         <input
           type='text'
           value={resetAnswer}
           onChange={handleresetAnswer}
           placeholder='Whats your favorite place'
+          required
         />
         <div className='registerBlock'>
           <button type="submit"
-          >Register</button>
+          >{load ? "Register" :  <span className='loader'></span>}</button>
         </div>
         <button className='siginButton'
           onClick={() => setLog(isLog => !isLog)}
