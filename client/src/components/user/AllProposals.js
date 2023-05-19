@@ -1,9 +1,7 @@
 import React from 'react'
 
-function AllProposals() {
+export default function AllProposals() {
   return (
     <div>AllProposals</div>
   )
 }
-
-export default AllProposals

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../contexts/ContextProvider';
 import { login } from '../../utils/utils.api';
-import jwt from 'jwt-decode'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
+
 
 function Login({ setLog }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {userType, changeUserType } = useAppContext();
+  const {userType, changeUserType, setUserDetails } = useAppContext();
   const [load , setload] = useState(true);
-
+  const navigate = useNavigate();
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -23,9 +26,18 @@ function Login({ setLog }) {
       password
     }
     login(newUser, userType === "Vendor" ? "vendor" : "user").then((res) => {
-      let token = res.token;
-      let user = jwt(token);
-      console.log(user)
+      if(res.status === "Success"){
+        toast.success("Successfully LoggedIn" , {
+          position : 'top-right'
+        })
+        setUserDetails(res)
+        userType === "Vendor" ? navigate('/vendor/proposals') : navigate('/user')
+      }else{
+        toast.error(res.message , {
+          position : 'top-right'
+        })
+        setload(true)
+      }
     })
   };
 
@@ -63,6 +75,7 @@ function Login({ setLog }) {
           onClick={() => setLog(isLog => !isLog)}
         >Register</button>
       </form>
+      <ToastContainer/>
     </div>
 
   )

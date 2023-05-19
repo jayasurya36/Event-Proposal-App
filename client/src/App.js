@@ -3,8 +3,8 @@ import ContextProvider from './contexts/ContextProvider';
 import AppRouter from './routers/AppRouter';
 import "./styles/home.css"
 import './styles/register.css'
-
-
+import './styles/header.css'
+import './styles/Proposals.css'
 function App() {
   return <ContextProvider>
     <AppRouter/>
