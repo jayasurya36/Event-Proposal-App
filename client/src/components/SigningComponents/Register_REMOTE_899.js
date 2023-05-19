@@ -9,7 +9,7 @@ function Register({ setLog }) {
   const [contact, setContactNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [resetAnswer, setResetAnswer] = useState('');
+  const [resetAnswer, setresetAnswer] = useState('');
   const { userType, changeUserType } = useAppContext()
   const handleNameChange = (e) => {
     setName(e.target.value);

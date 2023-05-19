@@ -9,8 +9,13 @@ function Register({ setLog }) {
   const [contact, setContactNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+<<<<<<< HEAD
   const [resetAnswer, setResetAnswer] = useState('');
+
+=======
+  const [resetAnswer, setresetAnswer] = useState('');
   const { userType, changeUserType } = useAppContext()
+>>>>>>> 26aa81f1e3ebf9d15c0d63dec850de3153a2d3bb
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -32,7 +37,11 @@ function Register({ setLog }) {
   };
 
   const handleresetAnswer = (e) => {
+<<<<<<< HEAD
+    setResetAnswer(e.target.value);
+=======
     setresetAnswer(e.target.value);
+>>>>>>> 26aa81f1e3ebf9d15c0d63dec850de3153a2d3bb
   };
 
   const handleSubmit = async (e) => {

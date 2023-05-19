@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../contexts/ContextProvider';
+import { login } from '../../utils/utils.api';
 
 
 function Login({ setLog }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { userType, changeUserType } = useAppContext()
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., make an API call to create a new user
+    const newUser = {
+      email,
+      password
+    }
+    console.log(newUser);
+    login(newUser , userType === "Vendor" ? "vendor" : "user" ).then((res) =>{
+      console.log(res);
+    })
   };
-  const { userType, changeUserType } = useAppContext()
+  
+  
 
   return (
     <div className='formHolder'>
@@ -28,7 +38,7 @@ function Login({ setLog }) {
         >User</button>
       </div>
       <div className='topicHolder'>Sign In to your account</div>
-      <form onSubmit={handleSubmit} className='content'>
+      <form onSubmit={handleSubmit} method='post' action='#' className='content'>
         <input type="email" value={email} onChange={handleEmailChange}
           placeholder='Email'
         />

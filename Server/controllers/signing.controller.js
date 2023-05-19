@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { parse } = require('dotenv');
 const User = require('../models/user.model');
 const Vendor = require('../models/vendor.model');
 const bcrypt = require('bcrypt');
@@ -8,7 +9,6 @@ const jwt = require('jsonwebtoken');
 //USER REGISTER
 const userRegister = async (req, res) => {
     try {
-        console.log(req.body);
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             return res.status(403).json({
@@ -91,7 +91,7 @@ const Userlogin = async (req, res) => {
         } else {
             res.status(400).json({
                 status: "Failed",
-                message: "User Not found"
+                message: "User Not Found"
             })
         }
     } catch (err) {
@@ -110,7 +110,7 @@ const vendorlogin = async (req, res) => {
             const {name , email , password , contact , resetAnswer,isVendor,proposals} = vendor
             if (await bcrypt.compare(req.body.password, password)) {
                 let token = await jwt.sign({name , email , password , contact , resetAnswer,isVendor,proposals}, process.env.secret);
-                res.status(400).json({
+                res.status(200).json({
                     status: "Success",
                     token: token,
                     user: vendor
@@ -124,7 +124,7 @@ const vendorlogin = async (req, res) => {
         } else {
             res.status(400).json({
                 status: "Failed",
-                message: "vendor Not found"
+                message: "vendor Not Found"
             })
         }
     } catch (err) {
@@ -185,7 +185,7 @@ const resetPasswordVendor = async(req , res) =>{
             }else{
                 res.status(400).json({
                     status : "Failed",
-                    message : "User Not found"
+                    message : "User Not Found"
                 })
             }
         }

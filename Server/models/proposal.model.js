@@ -35,8 +35,8 @@ const proposalModel = mongoose.Schema({
     },
     images: {
         type: [String],
-        required: true,
-        default: []
+        required : true,
+        default : []
     },
     foodPreferences: {
         type: String,
