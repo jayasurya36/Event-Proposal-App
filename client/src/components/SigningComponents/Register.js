@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../contexts/ContextProvider';
 import { register } from '../../utils/utils.api';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register({ setLog }) {
   const [name, setName] = useState('');
@@ -13,6 +14,7 @@ function Register({ setLog }) {
   const { userType, changeUserType } = useAppContext()
   const [load , setload] = useState(true);
   const [passwordCheck , setPasswordCheck] =useState(true)
+  // const [error , setError] = useState(true);
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -53,9 +55,18 @@ function Register({ setLog }) {
       contact,
       resetAnswer
     }
-    console.log(newUser);
     register(newUser , userType === "Vendor" ? "vendor" : "user" ).then((res) =>{
-      console.log(res);
+      if(res.status === "Success"){
+          toast.success("Successfully LoggedIn" , {
+            position : 'top-right'
+          })
+        setLog(log => !log)
+      }else{
+        toast.error(res.message , {
+          position : 'top-right'
+        })
+        setload(true)
+      }
     })
   };
 
@@ -84,8 +95,8 @@ function Register({ setLog }) {
           onChange={handleContactNumberChange}
           placeholder='Contact Number'
           required
-          max="10"
-          min="10"
+          maxLength={10}
+          minLength={10}
         />
         <input
           type="password"
@@ -119,6 +130,7 @@ function Register({ setLog }) {
           onClick={() => setLog(isLog => !isLog)}
         >Sign In</button>
       </form>
+      <ToastContainer/>
     </div>
   )
 }

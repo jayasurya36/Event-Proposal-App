@@ -25,7 +25,7 @@ const userRegister = async (req, res) => {
             });
             newUser = await newUser.save();
             res.status(200).json({
-                status: 'Sucess',
+                status: 'Success',
                 user: newUser
             })
         }
@@ -42,7 +42,7 @@ const vendorRegister = async (req, res) => {
     try {
         let vendor = await Vendor.findOne({ email: req.body.email });
         if (vendor) {
-            return res.status(403).json({
+            return res.status(400).json({
                 status: 'Failed',
                 message: "Email Id already exists"
             })
@@ -56,7 +56,7 @@ const vendorRegister = async (req, res) => {
             });
             newVendor = await newVendor.save();
             res.status(200).json({
-                status: 'Sucess',
+                status: 'Success',
                 user: newVendor
             })
         }
