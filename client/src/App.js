@@ -5,6 +5,9 @@ import "./styles/home.css"
 import './styles/register.css'
 import './styles/header.css'
 import './styles/Proposals.css'
+import './styles/EachProposals.css'
+import './styles/userProposals.css'
+
 function App() {
   return <ContextProvider>
     <AppRouter/>

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Vendor = require('./vendor.model')
 const proposalModel = mongoose.Schema({
     eventName: {
         type: String,
@@ -47,8 +47,7 @@ const proposalModel = mongoose.Schema({
         required: true
     },
     vendorId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Vendor',
+        type: mongoose.Schema.Types.ObjectId , ref: "Vendor",
         required: true
     }
 },

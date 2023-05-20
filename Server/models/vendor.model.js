@@ -37,4 +37,4 @@ const vendorModel = mongoose.Schema({
 }
 );
 
-module.exports = mongoose.model('Vendor' , vendorModel);
+module.exports = mongoose.model.Vendor || mongoose.model('Vendor' , vendorModel);

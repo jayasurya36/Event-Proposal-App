@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 const AppContext = React.createContext();
 export default function ContextProvider({children}){
     const[userType , setUserType] = useState('Vendor');
     const[userDetails , setUserDetails] = useState('');
-    const[vendorProposals , setVendorProposal] = useState('');
     return<AppContext.Provider
         value={{
             userType : userType,
@@ -15,10 +14,6 @@ export default function ContextProvider({children}){
             setUserDetails : (data) =>{
                 setUserDetails(data)
             },
-            vendorProposals : vendorProposals,
-            setVendorProposals : (data)=>{
-                setVendorProposal(data)
-            }
         }}
     >
         {children}
