@@ -4,6 +4,8 @@ import Home from '../components/SigningComponents/Home';
 import Header from '../components/Header';
 import VendorProposals from '../components/vendor/VendorProposals';
 import AllProposals from '../components/user/AllProposals';
+import Createproposal from '../components/vendor/Createproposal';
+
 function AppRouter() {
   return <BrowserRouter>
     <Routes>
@@ -15,6 +17,8 @@ function AppRouter() {
       <Route path='/user' element={<Header />}>
         <Route path='proposals' element={<AllProposals/>}/>
       </Route>
+      <Route path='/create' element={<Createproposal/>} />
+      
     </Routes>
   </BrowserRouter>
 }
