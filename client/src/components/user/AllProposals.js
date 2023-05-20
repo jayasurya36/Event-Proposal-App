@@ -9,12 +9,11 @@ export default function AllProposals() {
       setProposals(data);
     })
   } , [])
-  console.log(proposals)
   return <div>
     <div className='bannerImage'>
       <img src={partyImage} alt='Banner'/>
     </div>
-    <div>
+    <div className='allPosts'>
       <span>Proposals</span>
       <div className='proposalsContainer'>
         {

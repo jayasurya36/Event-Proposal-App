@@ -25,6 +25,7 @@
 .details section{
     color: #081838;
     font-weight: bold;
+    padding: 15px 0px;
 }
 .detailsContainer *{
     width: 60%;
