@@ -1,8 +1,10 @@
 import editicon from '../../Images/pencil-edit-button.svg';
 import deleteicon from '../../Images/bin.svg';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { deleteVendorProposal } from '../../utils/utils.api';
 
-
-export default function EachProposal({vendorProposals}) {
+export default function EachProposal({vendorProposals , onDeleteFunc}) {
     return <div className="singleProposal">
         <div className="eventName">{vendorProposals.eventName}</div>
         <div className="eventDesc">{vendorProposals.description}</div>
@@ -29,8 +31,25 @@ export default function EachProposal({vendorProposals}) {
             </div>
             <div className="optionsContainer">
                 <img src={editicon} alt="Edit"/>
-                <img src={deleteicon} alt="Delete"/>
+                <section  onClick={()=>{
+                        toast.info("Pls Wait");
+                        deleteVendorProposal(vendorProposals._id).then(res => {
+                            if(res.status === "Success"){
+                                toast.success("Deleted Successfully" , {
+                                    position : 'top-right'
+                                })
+                                onDeleteFunc(vendorProposals._id);
+                            }else{
+                                toast.error(res.message , {
+                                    position : 'top-right'
+                                })
+                            }
+                        })
+                    }}>
+                <img src={deleteicon} alt="Delete" />
+                </section>
             </div>
         </div>
+        <ToastContainer/>
     </div>
 }

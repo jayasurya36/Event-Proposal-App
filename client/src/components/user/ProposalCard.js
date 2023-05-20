@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router";
 
 
 export default function ProposalCard({data}){
-    console.log(data.vendorId);
-    return <div className="ProposalCard">
+    const navigate = useNavigate();
+    return <div className="ProposalCard"
+        onClick={() =>{
+            navigate(`${data._id}`)
+        }}
+    >
         <img src={data.images[0]}/>
         <div>{data.vendorId.name}</div>
         <div>{data.budget}</div>

@@ -88,6 +88,7 @@ const getUserSelectedProposals = async(req, res)=>{
     try{
         let id = req.params.id;
         let user = await User.findById(id);
+        console.log(user);
         let proposals = [];
         for(let i=0;i<user.selected_items.length;i++){
             let proposal = await Proposals.findById(user.selected_items[i]);
