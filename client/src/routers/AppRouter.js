@@ -5,6 +5,8 @@ import Header from '../Headers/Header';
 import VendorProposals from '../components/vendor/VendorProposals';
 import AllProposals from '../components/user/AllProposals';
 import SingleProposal from '../components/user/SingleProposal';
+import Createproposal from '../components/vendor/Createproposal';
+import Reset from '../components/SigningComponents/Reset';
 
 function AppRouter() {
   return <BrowserRouter>
@@ -18,6 +20,8 @@ function AppRouter() {
       <Route path='/vendor' element = {<Header />}>
         <Route path='proposals' element = {<VendorProposals/>}/>
       </Route>
+      <Route path='/create' element={<Createproposal/>} />
+      <Route path='/reset'  element={<Reset/>}/>
     </Routes>
   </BrowserRouter>
 }

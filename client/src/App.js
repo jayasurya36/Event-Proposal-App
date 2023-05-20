@@ -7,7 +7,6 @@ import './styles/header.css'
 import './styles/Proposals.css'
 import './styles/EachProposals.css'
 import './styles/userProposals.css'
-import './styles/singleProposal.css'
 function App() {
   return <ContextProvider>
     <AppRouter/>

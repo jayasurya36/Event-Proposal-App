@@ -10,7 +10,7 @@ function Register({ setLog }) {
   const [contact, setContactNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [resetAnswer, setresetAnswer] = useState('');
+  const [resetAnswer, setResetAnswer] = useState('');
   const { userType, changeUserType } = useAppContext()
   const [load , setload] = useState(true);
   const [passwordCheck , setPasswordCheck] =useState(true)
@@ -42,7 +42,7 @@ function Register({ setLog }) {
   };
 
   const handleresetAnswer = (e) => {
-    setresetAnswer(e.target.value);
+    setResetAnswer(e.target.value);
   };
 
   const handleSubmit = async (e) => {
