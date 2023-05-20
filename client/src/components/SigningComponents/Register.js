@@ -40,7 +40,7 @@ function Register({ setLog }) {
   };
 
   const handleresetAnswer = (e) => {
-    setresetAnswer(e.target.value);
+    setResetAnswer(e.target.value);
   };
 
   const handleSubmit = async (e) => {
