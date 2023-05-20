@@ -52,7 +52,7 @@ import React, { useState } from 'react';
   return(
     <div>
         <div>
-            <h2>Create proposal</h2>
+            <h2 className='main'>Create proposal</h2>
         </div>
         <section>
         <div className='container'>
@@ -130,7 +130,7 @@ import React, { useState } from 'react';
             </div>
         </div>
         </section>
-        <button className='button'>ADD</button>
+        <button className='button'>Post</button>
     </div>
   )
 

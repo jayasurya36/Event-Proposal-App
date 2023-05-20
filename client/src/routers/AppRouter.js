@@ -4,6 +4,7 @@ import Home from '../components/SigningComponents/Home'
 import Header from '../Headers/Header';
 import VendorProposals from '../components/vendor/VendorProposals';
 
+
 function AppRouter() {
   return <BrowserRouter>
     <Routes>
@@ -15,6 +16,8 @@ function AppRouter() {
       <Route path='/vendor' element = {<Header />}>
         <Route path='proposals' element = {<VendorProposals/>}/>
       </Route>
+      <Route path='/create' element={<Createproposal/>} />
+      
     </Routes>
   </BrowserRouter>
 }
