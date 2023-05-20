@@ -4,7 +4,8 @@ import Home from '../components/SigningComponents/Home'
 import Header from '../Headers/Header';
 import VendorProposals from '../components/vendor/VendorProposals';
 import AllProposals from '../components/user/AllProposals';
-
+import Createproposal from '../components/vendor/Createproposal';
+import Reset from '../components/SigningComponents/Reset';
 
 function AppRouter() {
   return <BrowserRouter>
@@ -18,7 +19,7 @@ function AppRouter() {
         <Route path='proposals' element = {<VendorProposals/>}/>
       </Route>
       <Route path='/create' element={<Createproposal/>} />
-      
+      <Route path='/reset'  element={<Reset/>}/>
     </Routes>
   </BrowserRouter>
 }
