@@ -126,7 +126,7 @@ const vendorProposals = async(req , res) =>{
 const getSingleProposal = async(req , res) =>{
     try{
         let id = req.params.id;
-        let proposal = await Proposals.findById(id);
+        let proposal = await Proposals.findById(id).populate("vendorId");
         res.status(200).json({
             status : "Success",
             data : proposal
