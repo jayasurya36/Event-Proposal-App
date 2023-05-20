@@ -29,8 +29,13 @@ function getVendorSpecificProposals(id){
       }}).then(res => res.json())
 }
 
+function getAllProposals(){
+    return fetch(`${BASE_URL}/proposals`).then(res => res.json());
+}
+
 export{
     register,
     login,
-    getVendorSpecificProposals
+    getVendorSpecificProposals,
+    getAllProposals
 }

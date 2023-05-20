@@ -1,11 +1,11 @@
 const Proposals = require('../models/proposal.model');
 const cloudinary = require('../middlewares/cloudinary');
 const User = require('../models/user.model')
-
+const Vendor = require('../models/vendor.model')
 //TO GET ALL PROPOSALS
 const getAllProposals = async (req, res) => {
     try {
-        let proposals = await Proposals.find();
+        let proposals = await Proposals.find().populate("vendorId");
         res.status(200).json({ status: "Success", data : proposals });
     } catch (err) {
         res.status(400).json({ status: "Failed", message: err.message });
@@ -15,14 +15,15 @@ const getAllProposals = async (req, res) => {
 //TO CREATE A PROPOSAL
 const createProposal = async(req , res) =>{
     try{
-        const arr = req.files.map(file => file.path);
+        let arr = []
+        arr = await req.files.map(file => file.path);
         for(let i=0;i<arr.length;i++){
             let imgUrl = await cloudinary.uploader.upload(arr[i]);
             arr[i] = imgUrl.secure_url;
         }
         let proposal = new Proposals({
             ...req.body,
-            images : arr
+            images : [...arr]
         });
         await proposal.save();
         res.status(200).json({

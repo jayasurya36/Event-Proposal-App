@@ -31,7 +31,7 @@ function Login({ setLog }) {
           position : 'top-right'
         })
         setUserDetails(res)
-        userType === "Vendor" ? navigate('/vendor/proposals') : navigate('/user')
+        userType === "Vendor" ? navigate('/vendor/proposals') : navigate('/user/proposals')
       }else{
         toast.error(res.message , {
           position : 'top-right'

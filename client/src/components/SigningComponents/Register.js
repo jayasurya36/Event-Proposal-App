@@ -57,7 +57,7 @@ function Register({ setLog }) {
     }
     register(newUser , userType === "Vendor" ? "vendor" : "user" ).then((res) =>{
       if(res.status === "Success"){
-          toast.success("Successfully LoggedIn" , {
+          toast.success("Successfully Registered" , {
             position : 'top-right'
           })
         setLog(log => !log)
