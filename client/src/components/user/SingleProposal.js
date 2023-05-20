@@ -16,6 +16,7 @@ export default function SingleProposal() {
     const data = {
        _id
     }
+    console.log(proposal)
     return proposal.length === 0 ? <div className='preLoading'>pls wait...</div> :
         <div className='bodyContainer'>
             <div className='topContainer'>
@@ -82,8 +83,8 @@ export default function SingleProposal() {
                             My album
                         </span>
                         {
-                            proposal.images.map(data => (
-                                <img src={data} alt='album' />
+                            proposal.images.map((data , index) => (
+                                <img src={data} alt='album' key={index}/>
                             ))
                         }
                     </div>
