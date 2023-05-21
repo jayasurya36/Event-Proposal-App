@@ -3,20 +3,23 @@ import search from '../../Images/search.svg';
 import { useAppContext } from '../../contexts/ContextProvider';
 import { getVendorSpecificProposals } from '../../utils/utils.api';
 import EachProposal from './EachProposal';
+import Createproposal from './Createproposal';
 function VendorProposals() {
   const { userDetails } = useAppContext();
   const [proposals, setProposals] = useState([]);
+  const [createPage , setCreatePage] = useState(false);
   useEffect(() => {
-    getVendorSpecificProposals(userDetails.user._id).then(res => {
+    getVendorSpecificProposals(userDetails.user._id , userDetails.token).then(res => {
       setProposals(res.data);
     })
   }, [])
-  console.log(proposals)
   return <div className='proposalsHolder'>
     <span>Proposals</span>
     <img src={search} alt='Search' />
     <input placeholder='Search Projects' />
-    <button>
+    <button onClick={() => (
+      setCreatePage(true)
+    )}>
       CREATE
     </button>
     <div>
@@ -30,6 +33,7 @@ function VendorProposals() {
           ))
       }
     </div>
+    {createPage ? <Createproposal setCreate={setCreatePage}/> : "" }
   </div>
 }
 

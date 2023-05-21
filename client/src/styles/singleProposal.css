@@ -94,6 +94,14 @@
     padding: 20px;
     display: block;
 }
+.albumImages{
+    display: flex;
+    flex-wrap: wrap;
+    /* overflow: scroll; */
+}
+.albumImages *{
+    margin: 5px ;
+}
 .albumdetails{
     padding: 20px;
     color: #767676;

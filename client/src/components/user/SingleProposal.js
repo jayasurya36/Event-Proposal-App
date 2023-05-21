@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addtoSelectedList, getProposalById } from '../../utils/utils.api';
 import { useAppContext } from '../../contexts/ContextProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SingleProposal() {
     const params = useParams();
     const [proposal, setProposal] = useState([]);
     const { userDetails } = useAppContext();
+    const navigate = useNavigate();
     useEffect(() => {
         getProposalById(params.id).then((data) => {
             setProposal(data.data)
         })
     }, [])
-    const _id = proposal._id;
+    const id = proposal._id;
     const data = {
-       _id
+        id
     }
     console.log(proposal)
     return proposal.length === 0 ? <div className='preLoading'>pls wait...</div> :
@@ -26,10 +29,18 @@ export default function SingleProposal() {
                         <button
                             onClick={() => {
                                 addtoSelectedList(userDetails.user._id, data).then(data => {
-                                    console.log(data)
+                                    console.log(data);
+                                    data.status === "Success" ? toast.success("Added Successfully" , {
+                                        position : 'top-right'
+                                    }) : toast.error(data.message , {
+                                        position : 'top-right'
+                                    })
                                 })
                             }}
                         >Select</button>
+                        <button
+                            onClick={() => navigate(-1)}
+                        >Back</button>
                     </div>
                 </div>
                 <div className='row1'>
@@ -82,11 +93,13 @@ export default function SingleProposal() {
                         <span className='albumtopic'>
                             My album
                         </span>
-                        {
-                            proposal.images.map((data , index) => (
-                                <img src={data} alt='album' key={index}/>
-                            ))
-                        }
+                        <span className='albumImages'>
+                            {
+                                proposal.images.map((data, index) => (
+                                    <img src={data} alt='album' key={index} />
+                                ))
+                            }
+                        </span>
                     </div>
                     <div className='album contact'>
                         <span className='albumtopic'>
@@ -106,5 +119,6 @@ export default function SingleProposal() {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
 }

@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const vendorAuthentication = async (req, res, next) => {
     if(req.headers.authorization) {
-        // let token = req.headers.authorization.split(" ");
         let payLoad = await jwt.verify(req.headers.authorization, process.env.SECRET); 
         if(!payLoad.isVendor) return res.status(401).json({status : "Failed", message : "Unauthorized"})
     } else {
@@ -13,7 +12,6 @@ const vendorAuthentication = async (req, res, next) => {
 }
 const userAuthentication = async (req, res, next) => {
     if(req.headers.authorization) {
-        // let token = req.headers.authorization.split(" ");
         let payLoad = await jwt.verify(req.headers.authorization, process.env.SECRET); 
         if(!payLoad.isUser) return res.status(401).json({status : "Failed", message : "Unauthorized"})
     } else {

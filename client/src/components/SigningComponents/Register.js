@@ -86,6 +86,7 @@ function Register({ setLog }) {
         </div>
       </div>
       <div className='topicHolder'>Register in your Account</div>
+      {passwordCheck ? "" : <span className='error'>Password Miss Match</span>}
       <form onSubmit={handleSubmit} method='post' action='#' className='content'>
         <input type="text" value={name} onChange={handleNameChange} placeholder='Name' required/>
         <input type="email" value={email} onChange={handleEmailChange} placeholder='Email' required/>
@@ -104,16 +105,15 @@ function Register({ setLog }) {
           onChange={handlePasswordChange}
           placeholder='Password'
           required
-          min="8"
+          minLength={8}
         />
-        {passwordCheck ? "" : <span className='error'>Password Miss Match</span>}
         <input
           type="password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           placeholder='Confirm Password'
           required
-          min="8"
+          minLength={8}
         />
         <input
           type='text'

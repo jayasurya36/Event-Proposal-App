@@ -7,7 +7,6 @@ import Reset from './Reset'
 function Home() {
 
   const[isLog , setLog] = useState(true);
- 
   return <div className='homeContainer'>
    <div className='logoContainer'>
    <h1>LOGO</h1>

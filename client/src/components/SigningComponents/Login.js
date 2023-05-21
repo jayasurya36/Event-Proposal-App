@@ -66,7 +66,8 @@ function Login({ setLog }) {
           required
         />
         <div className='forgotPassword'>
-          <a href="#">forgot password?</a>
+          <a href="/reset"
+          >forgot password?</a>
         </div>
         <div className='registerBlock'>
           <button type="submit">{load ? "Sign In" :  <span className='loader'></span>}</button>

@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import partyImage from '../../Images/private-party-venues@2x.png'
-import { getAllProposals } from '../../utils/utils.api';
+import { getAllProposals, getUserSelectedProposals } from '../../utils/utils.api';
 import ProposalCard from './ProposalCard';
+import { useAppContext } from '../../contexts/ContextProvider';
+
+
 export default function AllProposals() {
+  const { userDetails } = useAppContext();
   const[proposals , setProposals] = useState({data : []});
+  const[selectedComponents , SetselectedComponents] = useState({data : []});
   useEffect( () =>{
     getAllProposals().then(data =>{
       setProposals(data);
+    })
+  } , [])
+  useEffect( () =>{
+    getUserSelectedProposals(userDetails.user._id).then(data =>{
+      SetselectedComponents(data)
     })
   } , [])
   return <div>
@@ -14,6 +24,14 @@ export default function AllProposals() {
       <img src={partyImage} alt='Banner'/>
     </div>
     <div className='allPosts'>
+      {selectedComponents.data.length === 0 ? "" : 
+        <div className='proposalsContainer'>
+          <span>Selected</span>
+          {selectedComponents.data.map(data => (
+            <ProposalCard data={data} key={data._id} />
+          ))}
+        </div>
+      }
       <span>Proposals</span>
       <div className='proposalsContainer'>
         {

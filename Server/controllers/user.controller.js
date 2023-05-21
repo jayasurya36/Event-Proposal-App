@@ -5,9 +5,6 @@ const Vendor = require('../models/vendor.model')
 const addSelectedList = async(req , res)=>{
     try{
         let id = await req.params.id;
-        console.log(req.body);
-        console.log("params" , id);
-        console.log(req.body);
         let user = await User.findById(id);
         if(!user){
             res.status(400).json({
@@ -15,7 +12,7 @@ const addSelectedList = async(req , res)=>{
                 message : "User Not Found"
             })
         }else{
-            if(user.selected_items.indexOf(req.body._id) === -1){
+            if(user.selected_items.indexOf(req.body.id) === -1){
                 let updatedData = await User.findByIdAndUpdate({_id : id} , {$push : {selected_items : req.body.id}} , {new : true})
                 if(updatedData){
                 res.status(200).json({
@@ -24,7 +21,7 @@ const addSelectedList = async(req , res)=>{
                 })}else{
                     res.status(400).json({
                         status : "Failed",
-                        message : "Failed to update"
+                        message : "Already Added"
                     })
                 }
             }

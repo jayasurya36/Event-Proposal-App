@@ -141,7 +141,9 @@ const resetPasswordUser = async(req , res) =>{
         let user = await User.findOne({ email: req.body.email });
         if(user){
             if(await bcrypt.compare(req.body.resetAnswer , user.resetAnswer)){
-                if(await User.findOneAndUpdate({email : req.body.email} , {password : req.body.password})){
+                let hashedNewPassword = await bcrypt.hash(req.body.password , 10)
+                let update = await User.findOneAndUpdate({email : req.body.email} , {password : hashedNewPassword});
+                if(update){
                     res.status(200).json({
                         status : "Success"
                     })
@@ -172,7 +174,8 @@ const resetPasswordVendor = async(req , res) =>{
         let vendor = await Vendor.findOne({ email: req.body.email });
         if(vendor){
             if(await bcrypt.compare(req.body.resetAnswer , vendor.resetAnswer)){
-                if(await Vendor.findOneAndUpdate({email : req.body.email} , {password : req.body.password})){
+                let hashedNewPassword = await bcrypt.hash(req.body.password , 10)
+                if(await Vendor.findOneAndUpdate({email : req.body.email} , {password : hashedNewPassword})){
                     res.status(200).json({
                         status : "Success"
                     })

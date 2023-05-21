@@ -6,8 +6,8 @@ const  {vendorAuthentication , userAuthentication} = require('../middlewares/aut
 router.post('/proposal' ,multer.array('images') , createProposal);
 router.get('/proposals'  , getAllProposals);
 router.put('/:id' , multer.array("images"),editProposal);
-router.post('/:id' , deleteProposal);
+router.post('/:id' ,vendorAuthentication ,deleteProposal);
 router.get('/selected/:id' , getUserSelectedProposals);
-router.get('/proposal/vendor/:id' ,vendorProposals );
+router.get('/proposal/vendor/:id',vendorAuthentication ,vendorProposals );
 router.get('/proposal/:id' , getSingleProposal)
 module.exports = router

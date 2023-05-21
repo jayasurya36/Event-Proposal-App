@@ -9,8 +9,8 @@ router.post('/user/register' , userRegister);
 router.post('/vendor/login' , vendorlogin);
 router.post('/user/login' , Userlogin);
 
-router.post('/vendor/reset' , resetPasswordVendor);
-router.post('/user/reset' , resetPasswordUser);
+router.post('/Vendor/reset' , resetPasswordVendor);
+router.post('/User/reset' , resetPasswordUser);
 
 
 module.exports = router;

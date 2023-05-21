@@ -3,8 +3,10 @@ import deleteicon from '../../Images/bin.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { deleteVendorProposal } from '../../utils/utils.api';
+import { useAppContext } from '../../contexts/ContextProvider';
 
 export default function EachProposal({vendorProposals , onDeleteFunc}) {
+    const { userDetails } = useAppContext();
     return <div className="singleProposal">
         <div className="eventName">{vendorProposals.eventName}</div>
         <div className="eventDesc">{vendorProposals.description}</div>
@@ -33,7 +35,7 @@ export default function EachProposal({vendorProposals , onDeleteFunc}) {
                 <img src={editicon} alt="Edit"/>
                 <section  onClick={()=>{
                         toast.info("Pls Wait");
-                        deleteVendorProposal(vendorProposals._id).then(res => {
+                        deleteVendorProposal(vendorProposals._id ,userDetails.token).then(res => {
                             if(res.status === "Success"){
                                 toast.success("Deleted Successfully" , {
                                     position : 'top-right'
