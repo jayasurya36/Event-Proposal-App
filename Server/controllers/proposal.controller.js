@@ -15,14 +15,13 @@ const getAllProposals = async (req, res) => {
 //TO CREATE A PROPOSAL
 const createProposal = async (req, res) => {
     try {
-        // const { eventName, eventPlace, proposaltype, eventType, budget, from, to, description, images, foodPreferences, events } = req.body
-        console.log(req.files);
         let arr = [];
-        // arr = await req.files.map(file => file.path);
-        // for (let i = 0; i < arr.length; i++) {
-        //     let imgUrl = await cloudinary.uploader.upload(arr[i]);
-        //     arr[i] = imgUrl.secure_url;
-        // }
+        console.log(req.files);
+        arr = await req.files.map(file => file.path);
+        for (let i = 0; i < arr.length; i++) {
+            let imgUrl = await cloudinary.uploader.upload(arr[i]);
+            arr[i] = imgUrl.secure_url;
+        }
         let proposal = new Proposals({
             ...req.body,
             images : arr

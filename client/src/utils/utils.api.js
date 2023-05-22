@@ -1,4 +1,6 @@
-const BASE_URL = 'http://localhost:5000';
+
+
+export const BASE_URL = 'http://localhost:5000';
 
 
 function register(data, userType) {
@@ -65,11 +67,7 @@ function addtoSelectedList(userId, data) {
 function createProposal(data) {
     return fetch(`${BASE_URL}/proposal`, {
         method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            "accept": "application/json"
-        },
-        body: JSON.stringify(data)
+        body: data
     }).then(res => res.json());
 }
 
@@ -89,6 +87,13 @@ function resetPassword(data, userType) {
     }).then(res => res.json());
 }
 
+function updateProfilePic(data, userType, userId) {
+    return fetch(`${BASE_URL}/${userType}/profilepic/${userId}`, {
+        method: "PUT",
+        body: data
+    }).then(res => res.json());
+}
+export default BASE_URL;
 export {
     register,
     login,
@@ -99,5 +104,6 @@ export {
     addtoSelectedList,
     createProposal,
     getUserSelectedProposals,
-    resetPassword
+    resetPassword,
+    updateProfilePic
 }

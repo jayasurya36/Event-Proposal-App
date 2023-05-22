@@ -7,9 +7,9 @@ import Createproposal from './Createproposal';
 function VendorProposals() {
   const { userDetails } = useAppContext();
   const [proposals, setProposals] = useState([]);
-  const [createPage , setCreatePage] = useState(false);
+  const [createPage, setCreatePage] = useState(false);
   useEffect(() => {
-    getVendorSpecificProposals(userDetails.user._id , userDetails.token).then(res => {
+    getVendorSpecificProposals(userDetails.user._id, userDetails.token).then(res => {
       setProposals(res.data);
     })
   }, [])
@@ -26,14 +26,14 @@ function VendorProposals() {
       {
         proposals.length === 0 ? <div>No Proposals to Show</div> :
           proposals.map((data) => (
-            <EachProposal vendorProposals={data} key={data._id} onDeleteFunc={(id)=>{
+            <EachProposal setCreatePage={setCreatePage} vendorProposals={data} key={data._id} onDeleteFunc={(id) => {
               setProposals(proposals => proposals.filter(data => data._id !== id))
             }}
             />
           ))
       }
     </div>
-    {createPage ? <Createproposal setCreate={setCreatePage}/> : "" }
+    {createPage ? <Createproposal setCreate={setCreatePage} /> : ""}
   </div>
 }
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Profile from "./Profile";
 
 
-export default function ProfileCard() {
+export default function ProfileCard({setCard , setProfileImage}) {
     const { userDetails, setUserDetails } = useAppContext();
     const navigate = useNavigate();
     const [uploadProfile , setUploadProfile] = useState('');
@@ -26,6 +26,6 @@ export default function ProfileCard() {
                 logout()
             }}
         >LogOut</div>
-        {uploadProfile ?  <Profile setUploadProfile={setUploadProfile} /> : ""}
+        {uploadProfile ?  <Profile setProfileImage={setProfileImage} setCard={setCard} setUploadProfile={setUploadProfile} /> : ""}
     </div>
 }

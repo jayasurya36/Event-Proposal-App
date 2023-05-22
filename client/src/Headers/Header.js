@@ -7,6 +7,7 @@ import ProfileCard from './ProfileCard';
 export default function Header() {
   const { userDetails } = useAppContext();
   const [card, setCard] = useState(true);
+  const[profileImage , setProfileImage] = useState(userDetails.user.profile_pic);
   if (userDetails === '') {
     return <div>
       Unauthorised
@@ -24,10 +25,10 @@ export default function Header() {
           <div className='profileImageContainer' onClick={() => {
             setCard((card) => !card);
           }}>
-            {userDetails.user.profile_pic === null ? <img src={image} /> :
-              <img src={userDetails.profile_pic} />}
+            {profileImage === null ? <img src={image} /> :
+              <img src={userDetails.user.profile_pic} alt='profileImage'/>}
           </div>
-          {card ? "" : <ProfileCard />}
+          {card ? "" : <ProfileCard setProfileImage={setProfileImage} setCard={setCard} />}
         </div>
       </div>
       <Outlet />

@@ -9,10 +9,11 @@ import Createproposal from '../components/vendor/Createproposal';
 import Reset from '../components/SigningComponents/Reset';
 import Profile from '../Headers/Profile';
 
+
 function AppRouter() {
   return <BrowserRouter>
     <Routes>
-      <Route path="*" element={<h1>404 PAGE NOT FOUND!</h1>} />
+      {/* <Route path="*" element={<h1>404 PAGE NOT FOUND!</h1>} /> */}
       <Route path='/' element={<Home />} />
       <Route path='/user' element= {<Header/>}>
         <Route path='proposals' element = {<AllProposals/>}/>

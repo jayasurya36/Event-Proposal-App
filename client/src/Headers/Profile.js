@@ -1,34 +1,58 @@
 import React, { useState } from 'react'
 import Preview from './Preview'
 import close from '.././Images/close.svg'
-function Profile({setUploadProfile}) {
-    const [profile_pic, setprofile_pic] = useState('')
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { updateProfilePic } from '../utils/utils.api'
+import { useAppContext } from '../contexts/ContextProvider'
+function Profile({ setUploadProfile , setCard , setProfileImage}) {
+    const [data, setData] = useState("");
+    const { userDetails, userType ,setUserDetails} = useAppContext()
+    function setProfile(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("profilePic", data);
+        updateProfilePic(formData, userType, userDetails.user._id).then(res => {
+            // console.log(res.data.profile_pic);
+            if(res.status === "Success"){
+                setUploadProfile(false);
+                setProfileImage(res.data.profile_pic)
+                setCard(false)
+                toast.success("Profile Updated successfully" , {
+                    position : 'top-right'
+                })
+            }else{
+                toast.error("Failed to upload" , {
+                    position: 'top-right'
+                })
+            }
+        })
+    }
     return (
         <div className='ProfileCard'>
-            <div className='inputContainer'>
-                <div className='titleContainer'>
-                    <label>Profile Picture</label>
-                    <img src={close} alt='Close Icon' 
-                    onClick={() =>setUploadProfile(false)}
+            <form onSubmit={setProfile} encType="multipart/form-data">
+                <div className='inputContainer'>
+                    <div className='titleContainer'>
+                        <label>Profile Picture</label>
+                        <img src={close} alt='Close Icon'
+                            onClick={() => setUploadProfile(false)}
+                        />
+                    </div>
+                    <input type='file' filename="profile_pic" onChange={(e) => {
+                        setData(e.target.files[0])
+                    }}
                     />
+                    <div>
+                        {
+                            data ? <Preview post={URL.createObjectURL(data)} /> : ""
+                        }
+                        {
+                            data ? <button type='submit'>Add</button> : ""
+                        }
+                    </div>
                 </div>
-                <input type="file" filename="profile_pic" onChange={(e) => {
-                    setprofile_pic(e.target.files[0])
-                }}
-                />
-            </div>
-            <div>
-                {
-                    profile_pic ? <Preview post={URL.createObjectURL(profile_pic)} /> : ""
-                }
-                {
-                    profile_pic ? <button
-                        onClick={() => {
-                            console.log(profile_pic)
-                        }}
-                    >Add</button> : ""
-                }
-            </div>
+            </form>
+            <ToastContainer/>
         </div>
 
     )

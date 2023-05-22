@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { deleteVendorProposal } from '../../utils/utils.api';
 import { useAppContext } from '../../contexts/ContextProvider';
 
-export default function EachProposal({vendorProposals , onDeleteFunc}) {
-    const { userDetails } = useAppContext();
+export default function EachProposal({ vendorProposals, onDeleteFunc, setCreatePage }) {
+    const { userDetails, setEditDetails } = useAppContext();
     return <div className="singleProposal">
         <div className="eventName">{vendorProposals.eventName}</div>
         <div className="eventDesc">{vendorProposals.description}</div>
@@ -32,26 +32,28 @@ export default function EachProposal({vendorProposals , onDeleteFunc}) {
                 <section>{vendorProposals.budget}</section>
             </div>
             <div className="optionsContainer">
-                <img src={editicon} alt="Edit"/>
-                <section  onClick={()=>{
-                        toast.info("Pls Wait");
-                        deleteVendorProposal(vendorProposals._id ,userDetails.token).then(res => {
-                            if(res.status === "Success"){
-                                toast.success("Deleted Successfully" , {
-                                    position : 'top-right'
-                                })
-                                onDeleteFunc(vendorProposals._id);
-                            }else{
-                                toast.error(res.message , {
-                                    position : 'top-right'
-                                })
-                            }
-                        })
-                    }}>
-                <img src={deleteicon} alt="Delete" />
+                <img src={editicon} alt="Edit" onClick={() => {
+                    setEditDetails(vendorProposals);
+                    setCreatePage(true);
+                }} />
+                <section onClick={() => {
+                    deleteVendorProposal(vendorProposals._id, userDetails.token).then(res => {
+                        if (res.status === "Success") {
+                            toast.success("Deleted Successfully", {
+                                position: 'top-right'
+                            })
+                            onDeleteFunc(vendorProposals._id);
+                        } else {
+                            toast.error(res.message, {
+                                position: 'top-right'
+                            })
+                        }
+                    })
+                }}>
+                    <img src={deleteicon} alt="Delete" />
                 </section>
             </div>
         </div>
-        <ToastContainer/>
+        <ToastContainer />
     </div>
 }
