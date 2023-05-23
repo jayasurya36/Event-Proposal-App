@@ -114,13 +114,13 @@ select {
 .img-field .img-grid .img-container img {
     width: 100%;
 }
-.foodContainer input{
+.foodContainer textarea{
   width: 90%;
   height: 70px;
   border-radius: 10px;
   margin-bottom: 15px;
 }
-.EventContianer input{
+.EventContianer textarea{
   width: 90%;
   height: 70px;
   border-radius: 10px;

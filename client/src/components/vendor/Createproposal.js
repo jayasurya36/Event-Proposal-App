@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { createProposal } from '../../utils/utils.api';
+import React, { useEffect, useState } from 'react';
+import { createProposal, editProposal } from '../../utils/utils.api';
 import close from '../../Images/close.svg'
 import { useAppContext } from '../../contexts/ContextProvider';
 
 
 
-function Createproposal({ setCreate }) {
-
-
+function Createproposal({ setCreate, setProposals, proposals, edit, setEdit }) {
   const [eventName, setName] = useState('');
   const [eventPlace, setPlaceOfEvent] = useState('');
   const [proposaltype, setProposalType] = useState('');
@@ -20,25 +18,8 @@ function Createproposal({ setCreate }) {
   const [previewImages, setPreviewImages] = useState([]);
   const [foodPreferences, setFoodPreferences] = useState('');
   const [events, setEvents] = useState('');
-  const { userDetails, editDetails, setEditDetails } = useAppContext();
-
-
-  if (editDetails.length > 0) {
-    console.log(editDetails);
-    setName(editDetails.eventName)
-    setPlaceOfEvent(editDetails.eventPlace)
-    setProposalType(editDetails.proposaltype)
-    setEventType(editDetails.eventType)
-    setBudget(editDetails.budget)
-    setFrom(editDetails.from)
-    setTo(editDetails.to)
-    setDescription(editDetails.description)
-    setImages(editDetails.images)
-    setPreviewImages(editDetails.previewImages)
-    setEvents(editDetails.events)
-    setFoodPreferences(editDetails.foodPreferences)
-  }
-
+  const { userDetails } = useAppContext();
+  console.log(edit._id);
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -69,6 +50,22 @@ function Createproposal({ setCreate }) {
   const handleEventsChange = (e) => {
     setEvents(e.target.value);
   };
+
+  useEffect(() => {
+    if (edit) {
+      setName(edit.eventName);
+      setPlaceOfEvent(edit.eventPlace);
+      setProposalType(edit.proposaltype);
+      setEventType(edit.eventType);
+      setBudget(edit.budget);
+      setFrom(edit.from);
+      setTo(edit.to);
+      setDescription(edit.description);
+      setFoodPreferences(edit.foodPreferences);
+      setEvents(edit.events);
+    }
+  }, [])
+
   function setPreview(files) {
     setImages("");
     for (let i = 0; i < files.length; i++) {
@@ -79,7 +76,6 @@ function Createproposal({ setCreate }) {
   }
   function submitProposal(e) {
     e.preventDefault();
-    console.log(images);
     let newProposal = new FormData();
     newProposal.append("eventName", eventName);
     newProposal.append("eventPlace", eventPlace);
@@ -94,9 +90,27 @@ function Createproposal({ setCreate }) {
     newProposal.append("events", events);
     newProposal.append("vendorId", userDetails.user._id)
     console.log(newProposal);
-    createProposal(newProposal).then(res => {
-      console.log(res);
-    })
+
+    if (edit) {
+      editProposal(newProposal, edit._id).then(res => {
+        if (res.status === "Success") {
+          setCreate(false);
+          setEdit("");
+          setProposals(() => ([...proposals, res.proposals].reverse()))
+        } else {
+          alert(res.message);
+        }
+      })
+    } else {
+      createProposal(newProposal).then(res => {
+        if (res.status === "Success") {
+          setCreate(false);
+          setProposals(() => ([...proposals, res.data].reverse()))
+        } else {
+          alert(res.message);
+        }
+      })
+    }
   }
   return (
     <form onSubmit={submitProposal} encType="multipart/form-data">
@@ -105,8 +119,8 @@ function Createproposal({ setCreate }) {
           <h2>Create proposal</h2>
           <img src={close} alt='close'
             onClick={() => {
-              setEditDetails([]);
               setCreate(false);
+              setEdit("");
             }}
           />
         </div>
@@ -172,7 +186,7 @@ function Createproposal({ setCreate }) {
             <div>
               <div className='fieldContainer'>
                 <label>Description</label>
-                <input placeholder='Description' id='decpInput' type='text' required onChange={(e) => handleDescriptionChange(e)} value={description} />
+                <textarea placeholder='Description' id='decpInput' type='text' required onChange={(e) => handleDescriptionChange(e)} value={description} />
               </div>
             </div>
           </div>
@@ -199,11 +213,11 @@ function Createproposal({ setCreate }) {
             </div>
             <div className='foodContainer'>
               <label>Food Preferences</label>
-              <input placeholder='Food preferences' onChange={(e) => handleFoodPreferencesChange(e)} type='text' value={foodPreferences} />
+              <textarea placeholder='Food preferences' onChange={(e) => handleFoodPreferencesChange(e)} type='text' value={foodPreferences} />
             </div>
             <div className='EventContianer'>
               <label>Events</label>
-              <input placeholder='Food preferences' onChange={(e) => handleEventsChange(e)} type='text' value={events} />
+              <textarea placeholder='Food preferences' onChange={(e) => handleEventsChange(e)} type='text' value={events} />
             </div>
           </div>
         </div>
@@ -211,7 +225,7 @@ function Createproposal({ setCreate }) {
         <div className='buttonContainer'>
           <button className='submitButton'
             type='submit'
-          >Add</button>
+          >{edit ? "Edit" : "Add"}</button>
         </div>
       </div>
     </form>

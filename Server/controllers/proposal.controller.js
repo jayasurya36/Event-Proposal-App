@@ -68,9 +68,9 @@ const deleteProposal = async (req, res) => {
         })
         else {
             // console.log(post)
-            for (let i = 0; i < post.images.length; i++) {
-                await cloudinary.uploader.destroy(post.images[i]);
-            }
+            // for (let i = 0; i < post.images.length; i++) {
+            //     await cloudinary.uploader.destroy(post.images[i]);
+            // }
             await Proposals.findByIdAndDelete(id)
         }
         res.status(200).json({
@@ -91,7 +91,7 @@ const getUserSelectedProposals = async (req, res) => {
         let user = await User.findById(id);
         let proposals = [];
         for (let i = 0; i < user.selected_items.length; i++) {
-            let proposal = await Proposals.findById(user.selected_items[i]);
+            let proposal = await Proposals.findById(user.selected_items[i]).populate("vendorId");
             if (proposal) proposals.push(proposal);
         }
         res.status(200).json({

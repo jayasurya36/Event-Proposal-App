@@ -113,7 +113,7 @@ export default function SingleProposal() {
                         <span className='albumtopic'>
                             Events
                         </span>
-                        <span className='albumdetails'>
+                        <span className='albumdetails' id='eventDetails'>
                             {proposal.events}
                         </span>
                     </div>

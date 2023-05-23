@@ -4,7 +4,6 @@ const AppContext = React.createContext();
 export default function ContextProvider({children}){
     const[userType , setUserType] = useState('Vendor');
     const[userDetails , setUserDetails] = useState('');
-    const[editDetails , setEditDetails] = useState([]);
     return<AppContext.Provider
         value={{
             userType : userType,
@@ -14,10 +13,6 @@ export default function ContextProvider({children}){
             userDetails : userDetails,
             setUserDetails : (data) =>{
                 setUserDetails(data)
-            },
-            editDetails : editDetails,
-            setEditDetails : (data) =>{
-                setEditDetails(data);
             }
         }}
     >

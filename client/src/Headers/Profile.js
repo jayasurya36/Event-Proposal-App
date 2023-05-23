@@ -13,16 +13,15 @@ function Profile({ setUploadProfile , setCard , setProfileImage}) {
         const formData = new FormData();
         formData.append("profilePic", data);
         updateProfilePic(formData, userType, userDetails.user._id).then(res => {
-            // console.log(res.data.profile_pic);
             if(res.status === "Success"){
-                setUploadProfile(false);
                 setProfileImage(res.data.profile_pic)
+                setUploadProfile(false);
                 setCard(false)
                 toast.success("Profile Updated successfully" , {
                     position : 'top-right'
                 })
             }else{
-                toast.error("Failed to upload" , {
+                toast.error(res.message , {
                     position: 'top-right'
                 })
             }

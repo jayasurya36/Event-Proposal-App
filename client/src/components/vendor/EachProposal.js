@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { deleteVendorProposal } from '../../utils/utils.api';
 import { useAppContext } from '../../contexts/ContextProvider';
 
-export default function EachProposal({ vendorProposals, onDeleteFunc, setCreatePage }) {
-    const { userDetails, setEditDetails } = useAppContext();
+export default function EachProposal({ vendorProposals, onDeleteFunc, setCreatePage, setEdit }) {
+    const { userDetails } = useAppContext();
     return <div className="singleProposal">
         <div className="eventName">{vendorProposals.eventName}</div>
         <div className="eventDesc">{vendorProposals.description}</div>
@@ -33,7 +33,7 @@ export default function EachProposal({ vendorProposals, onDeleteFunc, setCreateP
             </div>
             <div className="optionsContainer">
                 <img src={editicon} alt="Edit" onClick={() => {
-                    setEditDetails(vendorProposals);
+                    setEdit(vendorProposals);
                     setCreatePage(true);
                 }} />
                 <section onClick={() => {

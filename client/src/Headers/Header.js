@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../contexts/ContextProvider'
 import image from '../Images/user.png'
 import { Outlet } from 'react-router';
@@ -8,6 +8,11 @@ export default function Header() {
   const { userDetails } = useAppContext();
   const [card, setCard] = useState(true);
   const[profileImage , setProfileImage] = useState(userDetails.user.profile_pic);
+
+  useEffect(()=>{
+    setProfileImage(profileImage);
+  } , [profileImage])
+
   if (userDetails === '') {
     return <div>
       Unauthorised
@@ -25,8 +30,7 @@ export default function Header() {
           <div className='profileImageContainer' onClick={() => {
             setCard((card) => !card);
           }}>
-            {profileImage === null ? <img src={image} /> :
-              <img src={userDetails.user.profile_pic} alt='profileImage'/>}
+            <img  src={profileImage === null ? image : profileImage} alt='ProfileImage' />
           </div>
           {card ? "" : <ProfileCard setProfileImage={setProfileImage} setCard={setCard} />}
         </div>

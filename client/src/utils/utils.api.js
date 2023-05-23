@@ -93,6 +93,15 @@ function updateProfilePic(data, userType, userId) {
         body: data
     }).then(res => res.json());
 }
+
+function editProposal(data , userId){
+    return fetch(`${BASE_URL}/${userId}` , {
+        method : "PUT",
+        body : data
+    }).then(res => res.json());
+}
+
+
 export default BASE_URL;
 export {
     register,
@@ -105,5 +114,6 @@ export {
     createProposal,
     getUserSelectedProposals,
     resetPassword,
-    updateProfilePic
+    updateProfilePic,
+    editProposal
 }
