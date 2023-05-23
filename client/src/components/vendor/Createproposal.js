@@ -217,7 +217,7 @@ function Createproposal({ setCreate, setProposals, proposals, edit, setEdit }) {
             </div>
             <div className='EventContianer'>
               <label>Events</label>
-              <textarea placeholder='Food preferences' onChange={(e) => handleEventsChange(e)} type='text' value={events} />
+              <textarea placeholder='Events available' onChange={(e) => handleEventsChange(e)} type='text' value={events} />
             </div>
           </div>
         </div>
