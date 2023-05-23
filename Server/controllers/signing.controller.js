@@ -76,7 +76,7 @@ const Userlogin = async (req, res) => {
         if (user) {
             const {name , email , password , contact , resetAnswer,isUser,proposals,profile_pic} = user
             if (await bcrypt.compare(req.body.password, user.password)) {
-                let token = await jwt.sign({name , email , password , contact , resetAnswer,isUser,proposals,}, process.env.secret);
+                let token = await jwt.sign({name , email , password , contact , resetAnswer,isUser,proposals,}, process.env.SECRET);
                 res.status(400).json({
                     status: "Success",
                     token: token,
@@ -109,7 +109,7 @@ const vendorlogin = async (req, res) => {
         if (vendor) {
             const {name , email , password , contact , resetAnswer,isVendor,proposals,profile_pic} = vendor
             if (await bcrypt.compare(req.body.password, password)) {
-                let token = await jwt.sign({name , email  , contact ,isVendor,proposals}, process.env.secret);
+                let token = await jwt.sign({name , email  , contact ,isVendor,proposals}, process.env.SECRET);
                 res.status(200).json({
                     status: "Success",
                     token: token,
